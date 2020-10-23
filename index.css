@@ -1,7 +1,16 @@
 .jumbotron{
     background-color: aliceblue;
+    background-image: url("./images/back-h.jpg");
+    background-size: contain;
+    color: black;
+    font-weight: bold;
+}
+
+.jumbotron p{
+    color: black;
+    font-weight: bold;
 }
 
 body{
-    background-color: rgb(198, 226, 250);
+    background-color: #e3f2fd;
 }
