@@ -1,3 +1,6 @@
+let test_over = false;
+let time_is_up = false;
+
 $("#press").on("click", function(e){
 e.preventDefault();
 $.ajax({
@@ -16,7 +19,8 @@ $.ajax({
 
         let form = document.querySelector("#ans");
         let header_question = document.createElement("h3");
-        header_question.innerText = q;
+        header_question.id = "question";
+        header_question.innerText = `Question ${i+1}: ${q}`;
         form.appendChild(header_question);
 
         let rad1 = document.createElement("input");
@@ -64,14 +68,26 @@ $.ajax({
                 choice3 = -3;
             }
         }
+        document.querySelector("#ans").appendChild(document.createElement("br"));
     }
-    document.querySelector("#ans").appendChild(document.createElement("br"));
+
     let submit = document.createElement("input");
     submit.type = "submit";
     submit.value = "Submit";
-    submit.id = "submit"
+    submit.id = "submit_btn"
+    submit.style.display = "none";
     document.querySelector("#ans").appendChild(submit);
-    $("#press").remove();
+    countdown( "countdown", 15, 0); // Starting timer
+    document.querySelector("#press").innerText = "Good Luck !";
+    document.getElementById("press").style.backgroundColor = "lightgreen";
+    $("#press").prop('disabled', true);
+    document.getElementById("countdown").style.display = ""; // Making timer visible
+    document.getElementById("countdown").style.visibility = "visible";
+    document.getElementById("countdown").style.border = "5px solid #004853"; // Making timer border visible
+    document.getElementById("countdown").style.display = "none"; // This is for the effect to work
+    $("#countdown").fadeIn("slow");
+    document.getElementById("sbmit_btn").style.display = ""; // Making submit button visible
+    $("#press").fadeOut(2000);
     },
     error: function(errorObj,txt){
         alert(errorObj.status+" "+errorObj.statusText);
@@ -79,7 +95,95 @@ $.ajax({
 })
 });
 
-$("body").on("click", "#submit" ,function(){
+$("#submit").on("click", function(){
+    // This method will be called onece the user presses submit on the popup
+    test_over = true;
+    let score = getScore();
+    let correct = getScoreWeight();
+    
+    //document.getElementById("submit_btn").click();
+    if(score>=1){
+        if(!time_is_up){
+        document.querySelector("#myModalLabel").innerText = `Score: ${score}/${correct}`;
+        }
+
+        document.querySelector("#cancel_btn").innerHTML = "Close";
+        document.getElementById("submit").style.display = "none";
+        document.getElementById("p_check_submit").style.display = "none";
+        document.getElementById("passed").style.display = "";
+    }
+
+    else{
+        if(!time_is_up){
+        document.querySelector("#myModalLabel").innerText = `Score: ${score}/${correct}`;
+        }
+
+        document.querySelector("#cancel_btn").innerHTML = "Close";
+        document.getElementById("submit").style.display = "none";
+        document.getElementById("p_check_submit").style.display = "none";
+        document.getElementById("failed").style.display = "";
+
+    }
+});
+
+$("#cancel_btn").on("click", function(){
+    // This will be called on the cancel button of the popup to make sure that the test is not over and to not end the test
+    if(test_over){
+        document.getElementById("submit_btn").click();
+    }
+});
+
+$("#btn_close_popup").on("click", function(){
+    // This will be called on the cancel button of the popup to make sure that the test is not over and to not end the test
+    if(test_over){
+        document.getElementById("submit_btn").click();
+    }
+});
+
+// Below is the timer functions
+function countdown(elementName, minutes, seconds)
+{
+    // This is the main function that will be called on an empty div
+    let element, endTime, hours, mins, msLeft, time;
+
+    function twoDigits( n )
+    {
+        return (n <= 9 ? "0" + n : n);
+    }
+
+    function updateTimer()
+    {
+        if(test_over){
+            return;
+        }
+
+        msLeft = endTime - (+new Date);
+        if ( msLeft < 1000 ) {
+            // When time is up
+            time_is_up = true;
+            element.innerHTML = "Time is up!";
+            let score = getScore();
+            let correct = getScoreWeight();
+            document.querySelector("#myModalLabel").innerText = `Time is up!\nScore: ${score}/${correct}`;
+            document.getElementById("sbmit_btn").click();
+            document.getElementById("submit").click(); // Pressing button submit
+        } 
+        
+        else {
+            time = new Date( msLeft );
+            hours = time.getUTCHours();
+            mins = time.getUTCMinutes();
+            element.innerHTML = (hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() );
+            setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+        }
+    }
+
+    element = document.getElementById( elementName );
+    endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
+    updateTimer();
+};
+
+const getScore = ()=>{
     let score = 0;
     let correct = Array.from(document.querySelectorAll(".correct"));
     for(let i in correct){
@@ -87,6 +191,11 @@ $("body").on("click", "#submit" ,function(){
             score++;
         }
     }
+    return score;
+}
 
-    alert(`Your score is ${score}/${correct.length}`);
-})
+const getScoreWeight = ()=>{
+    let correct = Array.from(document.querySelectorAll(".correct"));
+    
+    return correct.length;
+}
