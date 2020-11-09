@@ -98,7 +98,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
     header('Content-type:application/json;charset=utf-8');
     $connection = connectDb("localhost","root","","driving_questions");
-    $result = selectQuery($connection, "select * from french_questions order by RAND() LIMIT 5");
+    $result = selectQuery($connection, "select * from french_questions order by RAND() LIMIT 30");
     $ans = json_encode($result);
     echo $ans;
 ?>

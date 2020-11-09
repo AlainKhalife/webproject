@@ -12,7 +12,9 @@
     <body>
         <!-- Below is the navigation bar -->
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-            <a class="navbar-brand" href="#">LebDrive</a>
+            <a class="navbar-brand" href="./index.html">
+              <img id="nav_logo" class="navbar-brand" src="./images/leb_drive_logo.png" alt="Leb Drive" href="./index.html" />
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,7 +30,7 @@
                   <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Sign in/up</a>
+                    <a class="nav-link" data-toggle="modal" data-target="#centralModalFluid">Sign in/up</a>
                   </li>
               </ul>
             </div>
@@ -37,7 +39,8 @@
 
         <!-- Below is the jumbotron (Main welcome page header) -->
         <div class="jumbotron text-center">
-            <h1 class="display-4">Welcome LEB Drive</h1>
+            <h1 class="display-4">Welcome to Leb Drive</h1>
+            <img class="navbar-brand" src="./images/leb_drive_logo.png" alt="Leb Drive" href="./index.html" />
             <p class="lead">Do you have a driving test soon and you need to study. Don't worry we got you covered. In this website you will be able to review all of the lebanese driving exam tests.</p>
             <hr class="my-4">
             <p>Everything you need to know will be included here. Study hard and good luck on your exam</p>
@@ -51,7 +54,7 @@
               <div class="col-md-4">
                 <h2><i class="fa fa-lightbulb-o" style="font-size:48px;color:red"></i> Question Only Test</h2>
                 <p>In this test, you will need to answer 30 random questions which only consists of lebanese law and driving knowledge. You will not be asked questions regarding lebanese driving signs meaning. In order to pass this test, you must score above 24. </p>
-                <p><a class="btn btn-secondary" href="./test.html" role="button" style="background-color: red; font-weight: bold;">Start Questions Test</a></p>
+                <p><a class="btn btn-secondary" id="questions_test" data-url="./test.html" href="#" role="button" style="background-color: red; font-weight: bold;">Start Questions Test</a></p>
               </div>
               <div class="col-md-4">
                 <h2><svg width="1.0625em" height="1em" viewBox="0 0 17 16" class="bi bi-exclamation-triangle" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="color: red; font-size: 48px;">
@@ -123,6 +126,41 @@
             </div>
             <hr>
           </div>
+
+      
+      <!-- Below is the sign in/up PopUp-->
+      <div class="modal fade" id="centralModalFluid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fluid" role="document">
+        <!--Content-->
+        <div class="modal-content">
+          <!--Header-->
+          <div class="modal-header">
+            <h4 class="modal-title w-100" id="sign_in_title">Sign in</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--Body-->
+          <div class="modal-body">
+            <form class="form-signin">
+              <img id="logo" class="mb-4" src="./images/leb_drive_logo.png" alt="Leb Drive" width="72" height="72">
+              <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+              <label for="inputEmail" class="sr-only">Email address</label>
+              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+              <label for="inputPassword" class="sr-only">Password</label>
+              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              <p class="mt-5 mb-3 text-muted">&copy; Leb Drive 2020</p>
+            </form>
+          </div>
+          <!--Footer-->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        <!--/.Content-->
+      </div>
+    </div>
 
           <script src="./index.js"></script>
     </body>
