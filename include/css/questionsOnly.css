@@ -76,9 +76,18 @@ label{
     border-top-right-radius: 0;
   }
 
+  #form_signup{
+    display: none;
+  }
+
   /* Form Sign In CSS */
 
+  #user_name{
+    display: none;
+    right: 0;
+  }
+ 
   #nav_logo{
-    width: 50px;
+    width: 150px;
     height: 50px;
   }

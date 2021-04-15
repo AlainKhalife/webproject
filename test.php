@@ -96,9 +96,29 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); 
 } 
 
+    if($_SERVER["REQUEST_METHOD"]=="GET" && !isset($_GET["signsonly"]) && !isset($_GET["fulltest"])){
     header('Content-type:application/json;charset=utf-8');
     $connection = connectDb("localhost","root","","driving_questions");
     $result = selectQuery($connection, "select * from french_questions order by RAND() LIMIT 30");
     $ans = json_encode($result);
     echo $ans;
+    }
+
+    if($_SERVER["REQUEST_METHOD"]=="GET" && isset($_GET["signsonly"])){
+    header('Content-type:application/json;charset=utf-8');
+    $connection = connectDb("localhost","root","","driving_questions");
+    $result = selectQuery($connection, "select * from french_signs order by RAND() LIMIT 30");
+    $ans = json_encode($result);
+    echo $ans;
+    }
+
+    if($_SERVER["REQUEST_METHOD"]=="GET" && isset($_GET["fulltest"])){
+        header('Content-type:application/json;charset=utf-8');
+        $connection = connectDb("localhost","root","","driving_questions");
+        $result = selectQuery($connection, "select * from french_questions order by RAND() LIMIT 20");
+        $result2 = selectQuery($connection, "select * from french_signs order by RAND() LIMIT 10");
+        $finalres = array_merge($result, $result2);
+        $ans = json_encode($finalres);
+        echo $ans;
+    }
 ?>
